@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>SEO Analyzer Tool</h1>
+        <form method="post">
+            <input type="text" name="url" placeholder="Enter website URL" required>
+            <button type="submit">Analyze</button>
+        </form>
+        {% if seo_data %}
+            {% if seo_data.error %}
+                <div class="error">{{ seo_data.error }}</div>
+            {% else %}
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ seo_data.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ seo_data.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Word Count</th>
+                        <td>{{ seo_data.word_count }}</td>
+                    </tr>
+                    <tr>
+                        <th>Headings</th>
+                        <td>
+                            <ul>
+                                {% for tag, count in seo_data.headings.items() %}
+                                    <li>{{ tag }}: {{ count }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
